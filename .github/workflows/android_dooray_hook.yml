@@ -25,16 +25,15 @@ jobs:
     # - name: Build with Gradle
     #   run: ./gradlew build
 
+#    curl -X POST -H "Content-Type: application/json" \
+               # -d '{"key":"value"}' \
+               # https://example.com/api/endpoint
+               
     - name: Slack Notification
       if: always()
       run: |
-        if [ '${{ job.status }}' = 'success'　]; then
-          COLOR="good"
-        else
-          COLOR="danger"
-        fi
-
-        jq -n --arg jobLink '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' --arg color "${COLOR}" '{
+        curl -X POST -H 'Content-Type: application/json' -H 'cache-control: no-cache' \
+        -d '{
           {
             botName: "結果 ${{ job.status }}",
             botIconImage: "https://icons.iconarchive.com/icons/martz90/circle/256/android-icon.png",
@@ -45,4 +44,26 @@ jobs:
             title_link: $jobLink,
             text: "hogehoge"
           }
-        }' | curl ${{ secrets.SLACK_WEBHOOK_URL }} -X POST -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d @-
+        }' \
+        ${{ secrets.SLACK_WEBHOOK_URL }} 
+
+
+        
+        # if [ '${{ job.status }}' = 'success'　]; then
+        #   COLOR="good"
+        # else
+        #   COLOR="danger"
+        # fi
+
+        # jq -n --arg jobLink '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' --arg color "${COLOR}" '{
+        #   {
+        #     botName: "結果 ${{ job.status }}",
+        #     botIconImage: "https://icons.iconarchive.com/icons/martz90/circle/256/android-icon.png",
+        #     attachments: [{ 
+        #       title: "CJP 「TEST」 Link",
+        #       text: "Github Action TEST"
+        #     }],
+        #     title_link: $jobLink,
+        #     text: "hogehoge"
+        #   }
+        # }' | curl ${{ secrets.SLACK_WEBHOOK_URL }} -X POST -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d @-
