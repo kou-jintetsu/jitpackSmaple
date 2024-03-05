@@ -32,7 +32,9 @@ jobs:
     - name: Slack Notification
       if: always()
       run: |
-        curl -X POST -H 'Content-Type: application/json' -H 'cache-control: no-cache' \
+        curl  --verbose -X POST \
+        "https://hook.dooray.com/services/1962219519412888369/2726680363655663207/6TarKP6OTbar5XLakxPZHg" \
+        -H 'Content-Type: application/json' -H 'cache-control: no-cache' \
         -d '{
           {
             botName: "結果 ${{ job.status }}",
@@ -40,30 +42,9 @@ jobs:
             attachments: [{ 
               title: "CJP 「TEST」 Link",
               text: "Github Action TEST"
-            }],
-            title_link: $jobLink,
-            text: "hogehoge"
+            }]
           }
-        }' \
-        https://hook.dooray.com/services/1962219519412888369/2726680363655663207/6TarKP6OTbar5XLakxPZHg 
+        }'
+         
 
 
-        
-        # if [ '${{ job.status }}' = 'success'　]; then
-        #   COLOR="good"
-        # else
-        #   COLOR="danger"
-        # fi
-
-        # jq -n --arg jobLink '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' --arg color "${COLOR}" '{
-        #   {
-        #     botName: "結果 ${{ job.status }}",
-        #     botIconImage: "https://icons.iconarchive.com/icons/martz90/circle/256/android-icon.png",
-        #     attachments: [{ 
-        #       title: "CJP 「TEST」 Link",
-        #       text: "Github Action TEST"
-        #     }],
-        #     title_link: $jobLink,
-        #     text: "hogehoge"
-        #   }
-        # }' | curl ${{ secrets.SLACK_WEBHOOK_URL }} -X POST -H 'Content-Type: application/json' -H 'cache-control: no-cache' -d @-
