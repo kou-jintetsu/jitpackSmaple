@@ -33,7 +33,7 @@ jobs:
       if: always()
       run: |
         curl  --verbose -X POST \
-        "https://hook.dooray.com/services/1962219519412888369/2726680363655663207/6TarKP6OTbar5XLakxPZHg" \
+        "https://hook.dooray.com/services/1962219519412888369/3752450298291130712/7OpMvTQyQK-1ajQ3E1oyJA" \
         -H 'Content-Type: application/json' -H 'cache-control: no-cache' \
         -d '{
           {
