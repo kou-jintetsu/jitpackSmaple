@@ -45,7 +45,7 @@ jobs:
             text: "hogehoge"
           }
         }' \
-        ${{ secrets.SLACK_WEBHOOK_URL }} 
+        https://hook.dooray.com/services/1962219519412888369/3752450298291130712/7OpMvTQyQK-1ajQ3E1oyJA 
 
 
         
